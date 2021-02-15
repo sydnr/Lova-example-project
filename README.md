@@ -2,26 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.0.
 
-## Development server
+## Kurulum ve Baslangic
+Repostory yuklendikten sonra `ng serve` komutu ile projeyi baslatiniz.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Sistem
+* Proje başlangıcında Angular'ın APP_INITIALIZER event'inde araya girerek bir http request'i ile kullanmayı hedeflediğim api'den `AppInitService.createToken()` metodu ile token bilgisi aldım ve localStorage'a yazdım. Bu işlem başarıyla tamamlandıysa proje yüklenmeye devam edecek şekilde tasarladım. Böylece daha sonraki tüm request'lerde oluşturduğum `AuthInterceptor` yardımı ile bu token'ı http isteğine parametre ve/veya header olarak dahil edebildim. (Mevcut kullandığım web serviste bu özelliğe ihtiyaç olmadı ancak böyle bir opsiyon olduğunu sizlere gösterebilmek amacıyla bu özelliği dahil ettim. Yorum satırlarını inceleyebilirsiniz.)
+* `DefaultLayoutModule` sistemin ön tanımlı layout'unu kapsıyor. Bu tip arttırılarak her sayfa için farklı görünümler elde edilebilir. 
+* Routing Modülü üzerinde tanımlı olmayan bir istek geldiğinde `404` yönlendirmesi yapmak üzere `NotFoundComponent` oluşturuldu ve `AppRoutingModule` üzerinde gerekli tanımlama yapıldı.
+* `HomeModule` deki movie listesinde uzun metinleri kısaltmak üzere `TruncatePipe` oluşturdum.
+* Liste ekranında sayfalama için `Infinity Scroll` özelliği kullandım.
+* Uygulama üzerinde service worker etkinleştirilmiştir. Bu özellik ile uygulamaya windows veya android cihazlardan chrome tarayıcısıyla giriş yapıldığında tarayıcı uygulamayı kurmak istermisiniz bildirimi gösterecek. Eğer kurulum yapılırsa windows cihazlarda masaüstü kısayolu oluşturacak android cihazlardaysa uygulama listesine direkt olarak web sayfasını açan bir kısayol ekleyecektir. Bu yöntemle push notification gönderilebilir yada gönderilen http (get) isteklerinin response'ları cache edilebilir ve backend yada frontend offline durumda olsa da service-worker içerisinde belirtilen cache süresi boyunca online gibi gösterilebilir. Bu özelliği etkinleştirmedim ancak service worker bize böyle seçenekler sunmaktadır.
+ 

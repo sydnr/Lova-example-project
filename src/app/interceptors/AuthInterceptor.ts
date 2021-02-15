@@ -19,13 +19,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     /*const requestToken = localStorage.getItem('request_token');
     if (requestToken) {
-      req.headers.append('', '')
+      req.headers.append('Authorization', 'Bearer ' + requestToken)
     }*/
 
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          // localStorage.setItem('request_token', event.body.request_token);
         }
       }, err => {
         if (err instanceof HttpErrorResponse) {
