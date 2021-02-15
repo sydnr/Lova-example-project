@@ -1,0 +1,54 @@
+<app-default-layout>
+  <div toolbar class="d-flex align-items-center flex-row">
+    <a mat-icon-button (click)="back()">
+      <mat-icon>chevron_left</mat-icon>
+    </a>
+    <h3>{{movie?.original_title}}</h3>
+  </div>
+  <div *ngIf="movie">
+    <div class="row mt-3">
+      <div class="col-md-4 text-center mb-4">
+        <img [alt]="movie.original_title"
+             [src]="environment.services.movieImagePath + movie.poster_path"
+             class="img-fluid mat-elevation-z4"/>
+      </div>
+      <div class="col-md-8">
+        <h1>{{movie.title}} <small>IMDB: {{movie.vote_average}}</small></h1>
+        <div class="mb-4">
+          <mat-chip-list>
+            <mat-chip *ngFor="let genre of movie?.genres">
+              {{genre.name}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+
+        <p>{{movie.overview}}</p>
+        <p>Release Date: <strong>{{moment(movie.release_date).format('LL')}}</strong></p>
+
+        <div class="mb-3">
+          <a mat-raised-button *ngIf="movie?.homepage" target="_blank" [href]="movie.homepage">Home Page</a>
+        </div>
+
+
+        <div class="mb-2">
+          <mat-list class="pt-0">
+            <ng-container *ngFor="let production_company of movie.production_companies; let last = last">
+              <mat-list-item>
+                <img matListAvatar
+                     *ngIf="production_company.logo_path"
+                     [alt]="production_company.name"
+                     [src]="environment.services.movieImagePath + production_company.logo_path" class="img-fluid"/>
+                <img matListAvatar
+                     *ngIf="!production_company.logo_path"
+                     [alt]="production_company.name"
+                     src="/assets/img/no-image.png" class="img-fluid"/>
+                <h3 matLine>{{production_company.name}}</h3>
+              </mat-list-item>
+              <mat-divider *ngIf="!last"></mat-divider>
+            </ng-container>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-default-layout>

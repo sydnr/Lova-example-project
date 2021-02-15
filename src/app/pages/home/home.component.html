@@ -1,0 +1,33 @@
+<app-default-layout>
+  <div toolbar class="d-flex align-items-center flex-row" fxLayoutGap="7px">
+    <mat-icon>home</mat-icon>
+    <h3>Movie List</h3>
+  </div>
+  <div class="mat-elevation-z3 d-block position-relative"
+       infiniteScroll
+       [infiniteScrollDistance]="2"
+       [infiniteScrollThrottle]="50"
+       (scrolled)="onScroll()"
+       [scrollWindow]="true">
+    <mat-list *ngIf="movies.length > 0" class="pt-0">
+      <ng-container *ngFor="let movie of movies; let last = last">
+        <a mat-list-item
+           [ngClass]="{'active': appService.movie$.getValue()?.id === movie.id}"
+           (click)="getPosition()"
+           [matTooltip]="movie.original_title"
+           [matTooltipPosition]="'above'"
+           [routerLink]="'/detail/' + movie.id"
+           class="text-ellipsis overflow-hidden text-nowrap clickable-area mw-100" matRipple>
+          <img matListAvatar
+               [alt]="movie.original_title"
+               [src]="environment.services.movieImagePath + movie.poster_path" class="img-fluid"/>
+          <h3 matLine>{{movie.original_title | truncate:[30]}}</h3>
+          <p matLine>
+            <span>{{movie.overview | truncate:[40]}}</span>
+          </p>
+        </a>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </ng-container>
+    </mat-list>
+  </div>
+</app-default-layout>
